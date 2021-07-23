@@ -14,6 +14,7 @@ class Pawn(Piece):
         """ 
 
         super().__init__(board, piece_color, piece_position)
+
     
     def get_moves(self):
         """
@@ -44,6 +45,13 @@ class Pawn(Piece):
                 if rdp.piece is not None and rdp.piece.piece_color == "black":
                     valid_moves_pawn.append(right_diagonal_position)
             
+            if y == 2:
+                fp = self.board.position_dict[front_position]
+                if fp.piece is None:
+                    fmp = self.board.position_dict[f"{chr(x)}{y + 2}"]
+                    if fmp.piece is None:
+                        valid_moves_pawn.append(f"{chr(x)}{y + 2}")
+            
         elif self.piece_color == "black":
             front_position = f"{chr(x)}{y-1}"
             left_diagonal_position = f"{chr(x-1)}{y-1}"
@@ -63,8 +71,39 @@ class Pawn(Piece):
                 ldp = self.board.position_dict[right_diagonal_position]
                 if ldp.piece is not None and ldp.piece.piece_color == "white":
                     valid_moves_pawn.append(right_diagonal_position)
+
+            if y == 7:
+                fp = self.board.position_dict[front_position]
+                if fp.piece is None:
+                    fmp = self.board.position_dict[f"{chr(x)}{y - 2}"]
+                    if fmp.piece is None:
+                        valid_moves_pawn.append(f"{chr(x)}{y - 2}")        
         
         return valid_moves_pawn
+    
+    def get_moves_for_king(self):
+        """
+        Get the moves where opposite color king cannot move
+        """
+
+        invalid_moves_for_king = []
+        x = ord(self.piece_position[0])
+        y = int(self.piece_position[1])
+
+        if self.piece_color == "white":
+            left_diagonal_position = f"{chr(x-1)}{y+1}"
+            right_diagonal_position = f"{chr(x+1)}{y+1}"
+
+        if self.piece_color == "black":
+            left_diagonal_position = f"{chr(x-1)}{y-1}"
+            right_diagonal_position = f"{chr(x+1)}{y-1}"
+
+        if left_diagonal_position in pos_tuple:
+            invalid_moves_for_king.append(left_diagonal_position)
+        if right_diagonal_position in pos_tuple:
+            invalid_moves_for_king.append(right_diagonal_position)
+
+        return invalid_moves_for_king
     
     def __str__(self):
         return f"{self.piece_color[0]}p"

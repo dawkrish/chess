@@ -26,11 +26,11 @@ class Board:
     white_rook_positions = ("a1", "h1")
     black_rook_positions = ("a8", "h8")
     # Queen Positions
-    white_queen_positions = ["d1"]
-    black_queen_positions = ["d8"]
+    white_queen_positions = ("d1",)
+    black_queen_positions = ("d8",)
     # King Positions
-    white_king_position = "e1"
-    black_king_position = "e8"
+    white_king_positions = ("e1",)
+    black_king_positions = ("e8",)
     
     def __init__(self):
         self.position_dict = {}
@@ -69,12 +69,29 @@ class Board:
         for pos in Board.black_queen_positions:
             piece = Queen(self, "black", pos)
             self.position_dict[pos].piece = piece
-
+        
+        # Creating Kings
+        for pos in Board.white_king_positions:
+            piece = King(self, "white", pos)
+            self.position_dict[pos].piece = piece
+        for pos in Board.black_king_positions:
+            piece = King(self,"black", pos)
+            self.position_dict[pos].piece = piece
+        
+        # Creating Knights
+        for pos in Board.white_knight_positions:
+            piece = Knight(self, "white", pos)
+            self.position_dict[pos].piece = piece
+        for pos in Board.black_knight_positions:
+            piece = Knight(self,"black", pos)
+            self.position_dict[pos].piece = piece
 
     def print_board(self):
-        print("Chess Board")
+        print("   -" + ("-----" * 8))
+        print("   |", "Chess Board".center(39), "|", sep="")
         for i in range(8, 0, -1):
-            print("-" + ("-----" * 8))
+            print("   -" + ("-----" * 8))
+            print(f" {i} ", end="")
             for j in range(97, 105):
                 pos = self.position_dict[f"{chr(j)}{i}"]
                 if pos.piece is None:
@@ -83,7 +100,18 @@ class Board:
                     res = str(pos.piece)
                 print("| " + res, end = " ")
             print("|")
-        print("-" + ("-----" * 8))
+        print("   -" + ("-----" * 8))
+        print(end="   ")
+        for i in range(97, 105):
+            print(f"{chr(i)}".center(5), end="")
+        print()
 
 b = Board()
+
+bi = Bishop(b, "white", "d4")
+b.position_dict["d4"].piece = bi
+
+k = King(b, "black", "b3")
+b.position_dict["b3"].piece = k
 b.print_board()
+print(k.get_moves())

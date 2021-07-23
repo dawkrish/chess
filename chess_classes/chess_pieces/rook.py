@@ -159,6 +159,9 @@ class Rook(Piece):
             
 
         return valid_moves_rook
+
+    def get_moves_for_king(self):
         
+        return []
     def __str__(self):
         return f"{self.piece_color[0]}r"
