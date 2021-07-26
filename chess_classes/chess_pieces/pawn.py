@@ -1,5 +1,6 @@
 from ..vars import pos_tuple
 from ..piece import Piece
+from .king import King
 
 class Pawn(Piece):
     """
@@ -32,24 +33,24 @@ class Pawn(Piece):
 
             if front_position in pos_tuple:
                 fp = self.board.position_dict[front_position]
-                if fp.piece is None:
+                if fp.piece is None :
                     valid_moves_pawn.append(front_position)
             
             if left_diagonal_position in pos_tuple:
                 ldp = self.board.position_dict[left_diagonal_position]
-                if ldp.piece is not None and ldp.piece.piece_color == "black":
+                if ldp.piece is not None and ldp.piece.piece_color == "black" and type(ldp.piece) != King:
                     valid_moves_pawn.append(left_diagonal_position)
             
             if right_diagonal_position in pos_tuple:
                 rdp = self.board.position_dict[right_diagonal_position]
-                if rdp.piece is not None and rdp.piece.piece_color == "black":
+                if rdp.piece is not None and rdp.piece.piece_color == "black" and type(rdp.piece) != King:
                     valid_moves_pawn.append(right_diagonal_position)
             
             if y == 2:
                 fp = self.board.position_dict[front_position]
                 if fp.piece is None:
                     fmp = self.board.position_dict[f"{chr(x)}{y + 2}"]
-                    if fmp.piece is None:
+                    if fmp.piece is None and type(fp.piece != King):
                         valid_moves_pawn.append(f"{chr(x)}{y + 2}")
             
         elif self.piece_color == "black":
@@ -64,12 +65,12 @@ class Pawn(Piece):
 
             if left_diagonal_position in pos_tuple:
                 ldp = self.board.position_dict[left_diagonal_position]
-                if ldp.piece is not None and ldp.piece.piece_color == "white":
+                if ldp.piece is not None and ldp.piece.piece_color == "white" and type(ldp.piece) != King:
                     valid_moves_pawn.append(left_diagonal_position)
             
             if right_diagonal_position in pos_tuple:
-                ldp = self.board.position_dict[right_diagonal_position]
-                if ldp.piece is not None and ldp.piece.piece_color == "white":
+                rdp = self.board.position_dict[right_diagonal_position]
+                if rdp.piece is not None and rdp.piece.piece_color == "white" and type(rdp.piece) != King:
                     valid_moves_pawn.append(right_diagonal_position)
 
             if y == 7:
@@ -104,6 +105,6 @@ class Pawn(Piece):
             invalid_moves_for_king.append(right_diagonal_position)
 
         return invalid_moves_for_king
-    
+
     def __str__(self):
         return f"{self.piece_color[0]}p"

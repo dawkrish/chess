@@ -141,7 +141,72 @@ class King(Piece):
         return valid_moves_king
 
     def get_moves_for_king(self):
-        return []
+        """
+        pass
+        """
+
+        invalid_moves_for_king = []
+        x = ord(self.piece_position[0])
+        y = int(self.piece_position[1])
+
+        if self.piece_color == "white":
+            left = f"{chr(x-1)}{y}"
+            right = f"{chr(x+1)}{y}"
+            up = f"{chr(x)}{y-1}"
+            down = f"{chr(x)}{y+1}"
+            up_left = f"{chr(x-1)}{y-1}"
+            up_right = f"{chr(x+1)}{y-1}"
+            down_left = f"{chr(x-1)}{y+1}"
+            down_right = f"{chr(x+1)}{y+1}"
+
+            if left in pos_tuple:
+                invalid_moves_for_king.append(left)
+            if right in pos_tuple:
+                invalid_moves_for_king.append(right)
+            if up in pos_tuple:
+                invalid_moves_for_king.append(up)
+            if down in pos_tuple:
+                invalid_moves_for_king.append(down)
+            if up_left in pos_tuple:
+                invalid_moves_for_king.append(up_left)
+            if up_right in pos_tuple:
+                invalid_moves_for_king.append(up_right)
+            if down_left in pos_tuple:
+                invalid_moves_for_king.append(down_left)
+            if down_right in pos_tuple:
+                invalid_moves_for_king.append(down_right)
+        
+        if self.piece_color == "black":
+            left = f"{chr(x-1)}{y}"
+            right = f"{chr(x+1)}{y}"
+            up = f"{chr(x)}{y-1}"
+            down = f"{chr(x)}{y+1}"
+            up_left = f"{chr(x-1)}{y-1}"
+            up_right = f"{chr(x+1)}{y-1}"
+            down_left = f"{chr(x-1)}{y+1}"
+            down_right = f"{chr(x+1)}{y+1}"
+
+            if left in pos_tuple:
+                invalid_moves_for_king.append(left)
+            if right in pos_tuple:
+                invalid_moves_for_king.append(right)
+            if up in pos_tuple:
+                invalid_moves_for_king.append(up)
+            if down in pos_tuple:
+                invalid_moves_for_king.append(down)
+            if up_left in pos_tuple:
+                invalid_moves_for_king.append(up_left)
+            if up_right in pos_tuple:
+                invalid_moves_for_king.append(up_right)
+            if down_left in pos_tuple:
+                invalid_moves_for_king.append(down_left)
+            if down_right in pos_tuple:
+                invalid_moves_for_king.append(down_right)
+        
+        return invalid_moves_for_king
+    
+    def is_in_mate(self):
+        pass
 
     def __str__(self):
         return f"{self.piece_color[0]}k"

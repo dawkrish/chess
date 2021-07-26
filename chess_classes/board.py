@@ -107,11 +107,4 @@ class Board:
         print()
 
 b = Board()
-
-bi = Bishop(b, "white", "d4")
-b.position_dict["d4"].piece = bi
-
-k = King(b, "black", "b3")
-b.position_dict["b3"].piece = k
 b.print_board()
-print(k.get_moves())

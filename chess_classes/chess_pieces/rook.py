@@ -1,5 +1,6 @@
 from ..vars import pos_tuple
 from ..piece import Piece
+from .king import King
 
 class Rook(Piece):
     """
@@ -35,7 +36,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos)
                 break
             
@@ -52,7 +53,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos)
                 break
 
@@ -66,12 +67,13 @@ class Rook(Piece):
                 if new_pos not in pos_tuple:
                     break
                 piece_at_new_position = self.board.position_dict[new_pos].piece
+                
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos) 
-                break    
+                break
             # left loop
             new_x = x
             new_y = y
@@ -82,10 +84,11 @@ class Rook(Piece):
                 if new_pos not in pos_tuple:
                     break
                 piece_at_new_position = self.board.position_dict[new_pos].piece
+            
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos) 
                 break
 
@@ -103,7 +106,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos)
                 break
             
@@ -120,7 +123,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos)
                 break
 
@@ -137,7 +140,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_rook.append(new_pos) 
                 break    
             # left loop
@@ -153,7 +156,7 @@ class Rook(Piece):
                 if piece_at_new_position is None:
                     valid_moves_rook.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King :
                     valid_moves_rook.append(new_pos) 
                 break
             
@@ -161,7 +164,128 @@ class Rook(Piece):
         return valid_moves_rook
 
     def get_moves_for_king(self):
+        """
+        Get the moves where opposite color king cannot move
+        """
+
+        invalid_moves_for_king = []
+        x = ord(self.piece_position[0])
+        y = int(self.piece_position[1])
+
+        if self.piece_color == "white":
+            # up  loop
+            new_x = x
+            new_y = y
+            # Includes every move and breaks the loop when a piece is encountered
+            while True:
+                new_x = new_x  
+                new_y = new_y + 1
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+
+            # right loop  
+            new_x = x
+            new_y = y
+            while True:                
+                new_x = new_x + 1
+                new_y = new_y  
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+
+            # down loop
+            new_x = x
+            new_y = y
+            while True:                 
+                new_x = new_x  
+                new_y = new_y - 1
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+            # left loop
+            new_x = x
+            new_y = y
+            while True:
+                new_x = new_x - 1
+                new_y = new_y 
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+
+        if self.piece_color == "black":
+            # up  loop
+            new_x = x
+            new_y = y
+            # Includes every move and breaks the loop when a piece is encountered
+            while True:
+                new_x = new_x 
+                new_y = new_y - 1
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+
+            # right loop  
+            new_x = x
+            new_y = y
+            while True:                
+                new_x = new_x + 1
+                new_y = new_y 
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+            # down loop
+            new_x = x
+            new_y = y
+            while True:                 
+                new_x = new_x 
+                new_y = new_y + 1
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+            # left loop
+            new_x = x 
+            new_y = y
+            while True:
+                new_x = new_x - 1
+                new_y = new_y
+                new_pos = f"{chr(new_x)}{new_y}"
+                if new_pos not in pos_tuple:
+                    break
+                invalid_moves_for_king.append(new_pos)
+                piece_at_new_position = self.board.position_dict[new_pos].piece
+                if piece_at_new_position is not None:
+                    break
+
+        return invalid_moves_for_king
         
-        return []
     def __str__(self):
         return f"{self.piece_color[0]}r"

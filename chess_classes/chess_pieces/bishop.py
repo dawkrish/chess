@@ -1,5 +1,6 @@
 from ..vars import pos_tuple
 from ..piece import Piece
+from .king import King
  
 class Bishop(Piece):
     """
@@ -35,7 +36,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
             # up right loop  
@@ -51,7 +52,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
             # down right loop
@@ -67,7 +68,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
             # down left loop
@@ -83,7 +84,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "black":
+                if piece_at_new_position.piece_color == "black" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
 
@@ -101,7 +102,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
             # up right loop
@@ -117,7 +118,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
         
@@ -134,7 +135,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
 
@@ -151,7 +152,7 @@ class Bishop(Piece):
                 if piece_at_new_position is None:
                     valid_moves_bishop.append(new_pos)
                     continue
-                if piece_at_new_position.piece_color == "white":
+                if piece_at_new_position.piece_color == "white" and type(piece_at_new_position) != King:
                     valid_moves_bishop.append(new_pos)
                 break
 
