@@ -205,8 +205,75 @@ class King(Piece):
         
         return invalid_moves_for_king
     
+    def is_in_check(self):
+        in_check = False
+
+        if self.piece_color == "white":
+            for pos in pos_tuple:
+                position = self.board.position_dict[pos]
+                if position.piece is not None and position.piece.piece_color == "black":
+                    invalid_moves = position.piece.get_moves_for_king()
+                    if self.piece_position in invalid_moves:
+                        in_check = True
+                        break
+
+        if self.piece_color == "black":
+            for pos in pos_tuple:
+                position = self.board.position_dict[pos]
+                if position.piece is not None and position.piece.piece_color == "white":
+                    invalid_moves = position.piece.get_moves_for_king()
+                    if self.piece_position in invalid_moves:
+                        in_check = True
+                        break
+        
+        return in_check
+
     def is_in_mate(self):
-        pass
+        if not self.is_in_check():
+            return False
+        
+        if self.get_moves() != []:
+            return False
+        
+        in_mate = True
+        
+        if self.piece_color == "white":
+            for pos in pos_tuple:
+                position = self.board.position_dict[pos]
+                if position.piece is None or position.piece.piece_color == "black":
+                    continue
+                piece_moves = position.piece.get_moves()
+                initital_position = position.piece.piece_position
+                for final_position in piece_moves:
+                    position.piece.forced_move(final_position)
+                    if not self.is_in_check():
+                        in_mate = False
+                        break
+                    else:
+                        new_position = self.board.position_dict[final_position]
+                        new_position.piece.forced_move(initital_position)
+                if not in_mate:
+                    break
+        
+        if self.piece_color == "black":
+            for pos in pos_tuple:
+                position = self.board.position_dict[pos]
+                if position.piece is None or position.piece.piece_color == "white":
+                    continue
+                piece_moves = position.piece.get_moves()
+                initital_position = position.piece.piece_position
+                for final_position in piece_moves:
+                    position.piece.forced_move(final_position)
+                    if not self.is_in_check():
+                        in_mate = False
+                        break
+                    else:
+                        new_position = self.board.position_dict[final_position]
+                        new_position.piece.forced_move(initital_position)
+                if not in_mate:
+                    break
+        
+        return in_mate
 
     def __str__(self):
         return f"{self.piece_color[0]}k"
