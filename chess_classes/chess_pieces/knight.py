@@ -124,9 +124,27 @@ class Knight(Piece):
                 if rd.piece is None or rd.piece.piece_color == "white" and type(rd.piece) != King:
                     valid_moves_knight.append(right_down)
         
+        for pos in pos_tuple:
+            position = self.board.position_dict[pos]
+            if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
+                my_king = position.piece
+                break
+
+        if my_king.is_in_check():
+            new_valid_moves_knight = []
+            initial_position = self.piece_position
+            for final_position in valid_moves_knight:
+                piece_already_at_final_position = self.board.position_dict[final_position].piece
+                self.forced_move(final_position)
+                if not my_king.is_in_check():
+                    new_valid_moves_knight.append(final_position)
+                self.forced_move(initial_position)
+                self.board.position_dict[final_position].piece = piece_already_at_final_position
+            return new_valid_moves_knight 
+        
         return valid_moves_knight
     
-    def get_moves_for_king(self):
+    def get_invalid_moves_for_opposite_king(self):
         """
         Get the moves where opposite color king cannot move
         """

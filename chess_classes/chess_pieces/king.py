@@ -1,3 +1,5 @@
+
+
 from ..vars import pos_tuple
 from ..piece import Piece
 
@@ -38,7 +40,7 @@ class King(Piece):
                 if piece_at_pos is None:
                     continue
                 elif piece_at_pos.piece_color == "black":
-                    invalid_moves.extend(piece_at_pos.get_moves_for_king())
+                    invalid_moves.extend(piece_at_pos.get_invalid_moves_for_opposite_king())
 
             if left in pos_tuple and left not in invalid_moves:
                 l = self.board.position_dict[left]
@@ -96,7 +98,7 @@ class King(Piece):
                 if piece_at_pos is None:
                     continue
                 if piece_at_pos.piece_color == "white":
-                    invalid_moves.extend(piece_at_pos.get_moves_for_king())
+                    invalid_moves.extend(piece_at_pos.get_invalid_moves_for_opposite_king())
 
             if left in pos_tuple and left not in invalid_moves:
                 l = self.board.position_dict[left]
@@ -140,9 +142,9 @@ class King(Piece):
 
         return valid_moves_king
 
-    def get_moves_for_king(self):
+    def get_invalid_moves_for_opposite_king(self):
         """
-        pass
+        Get the moves where opposite color king cannot move
         """
 
         invalid_moves_for_king = []
@@ -158,25 +160,7 @@ class King(Piece):
             up_right = f"{chr(x+1)}{y-1}"
             down_left = f"{chr(x-1)}{y+1}"
             down_right = f"{chr(x+1)}{y+1}"
-
-            if left in pos_tuple:
-                invalid_moves_for_king.append(left)
-            if right in pos_tuple:
-                invalid_moves_for_king.append(right)
-            if up in pos_tuple:
-                invalid_moves_for_king.append(up)
-            if down in pos_tuple:
-                invalid_moves_for_king.append(down)
-            if up_left in pos_tuple:
-                invalid_moves_for_king.append(up_left)
-            if up_right in pos_tuple:
-                invalid_moves_for_king.append(up_right)
-            if down_left in pos_tuple:
-                invalid_moves_for_king.append(down_left)
-            if down_right in pos_tuple:
-                invalid_moves_for_king.append(down_right)
-        
-        if self.piece_color == "black":
+        elif self.piece_color == "black":
             left = f"{chr(x-1)}{y}"
             right = f"{chr(x+1)}{y}"
             up = f"{chr(x)}{y-1}"
@@ -186,33 +170,40 @@ class King(Piece):
             down_left = f"{chr(x-1)}{y+1}"
             down_right = f"{chr(x+1)}{y+1}"
 
-            if left in pos_tuple:
-                invalid_moves_for_king.append(left)
-            if right in pos_tuple:
-                invalid_moves_for_king.append(right)
-            if up in pos_tuple:
-                invalid_moves_for_king.append(up)
-            if down in pos_tuple:
-                invalid_moves_for_king.append(down)
-            if up_left in pos_tuple:
-                invalid_moves_for_king.append(up_left)
-            if up_right in pos_tuple:
-                invalid_moves_for_king.append(up_right)
-            if down_left in pos_tuple:
-                invalid_moves_for_king.append(down_left)
-            if down_right in pos_tuple:
-                invalid_moves_for_king.append(down_right)
-        
+        if left in pos_tuple:
+            invalid_moves_for_king.append(left)
+        if right in pos_tuple:
+            invalid_moves_for_king.append(right)
+        if up in pos_tuple:
+            invalid_moves_for_king.append(up)
+        if down in pos_tuple:
+            invalid_moves_for_king.append(down)
+        if up_left in pos_tuple:
+            invalid_moves_for_king.append(up_left)
+        if up_right in pos_tuple:
+            invalid_moves_for_king.append(up_right)
+        if down_left in pos_tuple:
+            invalid_moves_for_king.append(down_left)
+        if down_right in pos_tuple:
+            invalid_moves_for_king.append(down_right)
+
         return invalid_moves_for_king
     
     def is_in_check(self):
+        """
+        Returns True if the king is in check or False
+        """
+
         in_check = False
 
+        # Iterate through every position, if the king's position is included
+        # in return value of get_invalid_moves_for_opposite_king() of any of the opposite color
+        # piece, set in_check to True
         if self.piece_color == "white":
             for pos in pos_tuple:
                 position = self.board.position_dict[pos]
                 if position.piece is not None and position.piece.piece_color == "black":
-                    invalid_moves = position.piece.get_moves_for_king()
+                    invalid_moves = position.piece.get_invalid_moves_for_opposite_king()
                     if self.piece_position in invalid_moves:
                         in_check = True
                         break
@@ -221,7 +212,7 @@ class King(Piece):
             for pos in pos_tuple:
                 position = self.board.position_dict[pos]
                 if position.piece is not None and position.piece.piece_color == "white":
-                    invalid_moves = position.piece.get_moves_for_king()
+                    invalid_moves = position.piece.get_invalid_moves_for_opposite_king()
                     if self.piece_position in invalid_moves:
                         in_check = True
                         break
@@ -229,29 +220,52 @@ class King(Piece):
         return in_check
 
     def is_in_mate(self):
+        """
+        Returns True if king is in mate else False
+        """
+
+        temp = []
+        # Check if king is in check
         if not self.is_in_check():
             return False
         
+        # Check if king can move to get out of check
         if self.get_moves() != []:
             return False
         
         in_mate = True
         
+        # Iterate through every position, if a move of a same colored piece
+        # is found such that it removes the king from check, set in_mate to False 
         if self.piece_color == "white":
             for pos in pos_tuple:
-                position = self.board.position_dict[pos]
+                position = self.board.position_dict[pos] # position object of the positoin 'pos'
+                # If there is no piece on the position or the piece is of opposite color, continue
                 if position.piece is None or position.piece.piece_color == "black":
                     continue
+                # Get the moves of the piece on the position
                 piece_moves = position.piece.get_moves()
-                initital_position = position.piece.piece_position
+                # Save the original position of the piece
+                initial_position = position.piece.piece_position
+                # Iterate through all the moves of the piece
+                # Play them one by one and check if king is still under check
                 for final_position in piece_moves:
+                    # Forcecully move the piece to final_position
                     position.piece.forced_move(final_position)
+                    # If after moving the piece, the king is no longer in check
+                    # set in_mate = False
+                    # Else undo the move made by the piece and move on to the
+                    # next move of the piece
                     if not self.is_in_check():
+                        temp.append(initial_position, final_position)
                         in_mate = False
                         break
                     else:
+                        # Take the new position of the piece
                         new_position = self.board.position_dict[final_position]
-                        new_position.piece.forced_move(initital_position)
+                        # Move the piece from new_position to initial_position
+                        new_position.piece.forced_move(initial_position)
+                # If the king is not in mate, break the loop
                 if not in_mate:
                     break
         
@@ -261,18 +275,19 @@ class King(Piece):
                 if position.piece is None or position.piece.piece_color == "white":
                     continue
                 piece_moves = position.piece.get_moves()
-                initital_position = position.piece.piece_position
+                initial_position = position.piece.piece_position
                 for final_position in piece_moves:
                     position.piece.forced_move(final_position)
                     if not self.is_in_check():
+                        temp.append(initial_position, final_position)
                         in_mate = False
                         break
                     else:
                         new_position = self.board.position_dict[final_position]
-                        new_position.piece.forced_move(initital_position)
+                        new_position.piece.forced_move(initial_position)
                 if not in_mate:
                     break
-        
+      
         return in_mate
 
     def __str__(self):

@@ -45,7 +45,7 @@ class Queen(Piece):
                 new_pos = f"{chr(new_x)}{new_y}"
                 if new_pos not in pos_tuple:
                     break
-                    piece_at_new_position = self.board.position_dict[new_pos].piece
+                piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is None:
                     valid_moves_queen.append(new_pos)
                     continue
@@ -106,8 +106,8 @@ class Queen(Piece):
             new_x = x
             new_y = y
             while True:
-                new_x = new_x 
-                new_y = new_y - 1
+                new_x = new_x
+                new_y = new_y + 1
                 new_pos = f"{chr(new_x)}{new_y}"
                 if new_pos not in pos_tuple:
                     break
@@ -288,9 +288,28 @@ class Queen(Piece):
                     valid_moves_queen.append(new_pos) 
                 break
 
+        for pos in pos_tuple:
+            position = self.board.position_dict[pos]
+            if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
+                my_king = position.piece
+                break 
+
+        if my_king.is_in_check():
+            new_valid_moves_queen = []
+            initial_position = self.piece_position
+            for final_position in valid_moves_queen:
+                piece_already_at_final_position = self.board.position_dict[final_position].piece
+                self.forced_move(final_position)
+                if not my_king.is_in_check():
+                    new_valid_moves_queen.append(final_position)
+                self.forced_move(initial_position)
+                self.board.position_dict[final_position].piece = piece_already_at_final_position
+            return new_valid_moves_queen
+
         return valid_moves_queen
 
-    def get_moves_for_king(self):
+
+    def get_invalid_moves_for_opposite_king(self):
         """
         Get the moves where opposite color king cannot move
         """

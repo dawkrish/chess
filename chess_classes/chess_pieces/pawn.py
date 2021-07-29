@@ -26,14 +26,15 @@ class Pawn(Piece):
         x = ord(self.piece_position[0])
         y = int(self.piece_position[1])
 
-        if self.piece_color == "white": 
+        if self.piece_color == "white":
+
             front_position = f"{chr(x)}{y+1}"
             left_diagonal_position = f"{chr(x-1)}{y+1}"
             right_diagonal_position = f"{chr(x+1)}{y+1}"
 
             if front_position in pos_tuple:
                 fp = self.board.position_dict[front_position]
-                if fp.piece is None :
+                if fp.piece is None:
                     valid_moves_pawn.append(front_position)
             
             if left_diagonal_position in pos_tuple:
@@ -78,11 +79,29 @@ class Pawn(Piece):
                 if fp.piece is None:
                     fmp = self.board.position_dict[f"{chr(x)}{y - 2}"]
                     if fmp.piece is None:
-                        valid_moves_pawn.append(f"{chr(x)}{y - 2}")        
+                        valid_moves_pawn.append(f"{chr(x)}{y - 2}")
         
+        for pos in pos_tuple:
+            position = self.board.position_dict[pos]
+            if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
+                my_king = position.piece
+                break
+
+        if my_king.is_in_check():
+            new_valid_moves_pawn = []
+            initial_position = self.piece_position
+            for final_position in valid_moves_pawn:
+                piece_already_at_final_position = self.board.position_dict[final_position].piece
+                self.forced_move(final_position)
+                if not my_king.is_in_check():
+                    new_valid_moves_pawn.append(final_position)
+                self.forced_move(initial_position)
+                self.board.position_dict[final_position].piece = piece_already_at_final_position
+            return new_valid_moves_pawn
+
         return valid_moves_pawn
     
-    def get_moves_for_king(self):
+    def get_invalid_moves_for_opposite_king(self):
         """
         Get the moves where opposite color king cannot move
         """

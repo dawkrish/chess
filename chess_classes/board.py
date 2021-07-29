@@ -70,10 +70,10 @@ class Board:
             piece = Queen(self, "black", pos)
             self.position_dict[pos].piece = piece
         
-        # Creating Kings
-        for pos in Board.white_king_positions:
-            piece = King(self, "white", pos)
-            self.position_dict[pos].piece = piece
+        # Creating Kings    
+        '''for pos in Board.white_king_positions:
+            piece = King(self,"white", pos)
+            self.position_dict[pos].piece = piece'''
         for pos in Board.black_king_positions:
             piece = King(self,"black", pos)
             self.position_dict[pos].piece = piece
@@ -107,4 +107,17 @@ class Board:
         print()
 
 b = Board()
+"""
+BIG BUG ALERT
+
+q2 = Queen(b, "black", "h3")
+b.position_dict["h3"].piece = q2
+
+
+k = King(b,"white","d3")
+b.position_dict["d3"].piece = k
+
 b.print_board()
+
+print(k.get_moves())
+"""
