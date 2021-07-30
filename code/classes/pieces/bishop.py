@@ -202,7 +202,11 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # up right loop  
@@ -217,8 +221,11 @@ class Bishop(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
-
             # down right loop
             new_x = x
             new_y = y
@@ -230,7 +237,11 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # down left loop
@@ -244,7 +255,11 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
         if self.piece_color == "black":
@@ -259,9 +274,12 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
-
             # up right loop  
             new_x = x
             new_y = y
@@ -273,9 +291,12 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
-
             # down right loop
             new_x = x
             new_y = y
@@ -288,6 +309,10 @@ class Bishop(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
             # down left loop
@@ -301,7 +326,11 @@ class Bishop(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
         return invalid_moves_for_king

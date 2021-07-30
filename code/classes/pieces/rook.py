@@ -167,7 +167,10 @@ class Rook(Piece):
                 my_king = position.piece
                 break
 
+        # If king is in check, allow only those moves which prevent the check
         if my_king.is_in_check():
+            # Play every valid move and see if king is still in check.
+            # If king remains in check, then that valid move is removed
             new_valid_moves_rook = []
             initial_position = self.piece_position
             for final_position in valid_moves_rook:
@@ -178,6 +181,7 @@ class Rook(Piece):
                 self.forced_move(initial_position)
                 self.board.position_dict[final_position].piece = piece_already_at_final_position
             return new_valid_moves_rook
+            
         return valid_moves_rook
 
     def get_invalid_moves_for_opposite_king(self):
@@ -202,7 +206,11 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # right loop  
@@ -216,7 +224,11 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # down loop
@@ -230,7 +242,11 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
             # left loop
             new_x = x
@@ -243,7 +259,11 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
         if self.piece_color == "black":
@@ -259,7 +279,12 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
+                    break
                     break
 
             # right loop  
@@ -274,6 +299,10 @@ class Rook(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
             # down loop
             new_x = x
@@ -286,8 +315,14 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
+                
+                    
             # left loop
             new_x = x 
             new_y = y
@@ -299,7 +334,11 @@ class Rook(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
         return invalid_moves_for_king

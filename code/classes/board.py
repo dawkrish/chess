@@ -107,17 +107,22 @@ class Board:
         print()
 
 b = Board()
-"""
-BIG BUG ALERT
 
-q2 = Queen(b, "black", "h3")
-b.position_dict["h3"].piece = q2
+k = King(b, "black", "b6")
+b.position_dict["b6"].piece = k
 
+r = Bishop(b, "black", "d4")
+b.position_dict["d4"].piece = r
 
-k = King(b,"white","d3")
-b.position_dict["d3"].piece = k
+r = Bishop(b, "black", "d3")
+b.position_dict["d3"].piece = r
+
+p = Pawn(b,"black","c5")
+b.position_dict["c5"].piece = p
+
+b.position_dict["c7"].piece = None
 
 b.print_board()
-
+print(k.is_in_check())
 print(k.get_moves())
-"""
+print(k.is_in_mate())

@@ -86,8 +86,11 @@ class Pawn(Piece):
             if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
                 my_king = position.piece
                 break
-
+    
+        # If king is in check, allow only those moves which prevent the check
         if my_king.is_in_check():
+            # Play every valid move and see if king is still in check.
+            # If king remains in check, then that valid move is removed
             new_valid_moves_pawn = []
             initial_position = self.piece_position
             for final_position in valid_moves_pawn:
@@ -98,8 +101,8 @@ class Pawn(Piece):
                 self.forced_move(initial_position)
                 self.board.position_dict[final_position].piece = piece_already_at_final_position
             return new_valid_moves_pawn
-
-        return valid_moves_pawn
+            
+        return valid_moves_pawn  
     
     def get_invalid_moves_for_opposite_king(self):
         """

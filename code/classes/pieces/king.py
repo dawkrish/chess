@@ -41,7 +41,6 @@ class King(Piece):
                     continue
                 elif piece_at_pos.piece_color == "black":
                     invalid_moves.extend(piece_at_pos.get_invalid_moves_for_opposite_king())
-
             if left in pos_tuple and left not in invalid_moves:
                 l = self.board.position_dict[left]
                 if l.piece is None or l.piece.piece_color == "black":
@@ -99,7 +98,7 @@ class King(Piece):
                     continue
                 if piece_at_pos.piece_color == "white":
                     invalid_moves.extend(piece_at_pos.get_invalid_moves_for_opposite_king())
-
+           
             if left in pos_tuple and left not in invalid_moves:
                 l = self.board.position_dict[left]
                 if l.piece is None or l.piece.piece_color == "white":
@@ -224,7 +223,7 @@ class King(Piece):
         Returns True if king is in mate else False
         """
 
-        temp = []
+      
         # Check if king is in check
         if not self.is_in_check():
             return False
@@ -257,7 +256,6 @@ class King(Piece):
                     # Else undo the move made by the piece and move on to the
                     # next move of the piece
                     if not self.is_in_check():
-                        temp.append(initial_position, final_position)
                         in_mate = False
                         break
                     else:
@@ -279,7 +277,7 @@ class King(Piece):
                 for final_position in piece_moves:
                     position.piece.forced_move(final_position)
                     if not self.is_in_check():
-                        temp.append(initial_position, final_position)
+                        
                         in_mate = False
                         break
                     else:

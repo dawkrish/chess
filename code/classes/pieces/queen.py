@@ -332,8 +332,11 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
-
             # right loop  
             new_x = x
             new_y = y
@@ -346,6 +349,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # down loop
@@ -360,6 +367,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
             # left loop
             new_x = x
@@ -373,6 +384,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
             # up left loop
             new_x = x
@@ -387,6 +402,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
 
             # up right loop  
@@ -401,6 +420,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
             # down right loop
             new_x = x
@@ -414,6 +437,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
             # down left loop
             new_x = x
@@ -427,8 +454,12 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "black":
+                            continue
+                        break
                     break
-        
+
         if self.piece_color == "black":
             # up  loop
             new_x = x
@@ -443,6 +474,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
             # right loop  
@@ -457,6 +492,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
             # down loop
             new_x = x
@@ -470,7 +509,12 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
+    
             # left loop
             new_x = x 
             new_y = y
@@ -482,9 +526,13 @@ class Queen(Piece):
                     break
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
-                if piece_at_new_position is not None:
+                if piece_at_new_position is not None :
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
-            
+                
             # up left loop
             new_x = x
             new_y = y
@@ -498,6 +546,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
             # up right loop  
@@ -512,6 +564,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
             # down right loop
             new_x = x
@@ -525,6 +581,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
             # down left loop
             new_x = x
@@ -538,6 +598,10 @@ class Queen(Piece):
                 invalid_moves_for_king.append(new_pos)
                 piece_at_new_position = self.board.position_dict[new_pos].piece
                 if piece_at_new_position is not None:
+                    if type(piece_at_new_position) == King:
+                        if piece_at_new_position.piece_color == "white":
+                            continue
+                        break
                     break
 
         return invalid_moves_for_king
