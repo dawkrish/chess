@@ -1,11 +1,11 @@
 from .vars import pos_tuple, position_color_relation
 from .position import Position
-from .chess_pieces.pawn import Pawn
-from .chess_pieces.king import King
-from .chess_pieces.queen import Queen
-from .chess_pieces.knight import Knight
-from .chess_pieces.bishop import Bishop
-from .chess_pieces.rook import Rook
+from .pieces.pawn import Pawn
+from .pieces.king import King
+from .pieces.queen import Queen
+from .pieces.knight import Knight
+from .pieces.bishop import Bishop
+from .pieces.rook import Rook
 
 
 class Board:
