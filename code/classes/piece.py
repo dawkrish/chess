@@ -26,8 +26,13 @@ class Piece :
         if to not in self.get_moves():
             raise ValueError("Not a valid move!! ")
         
-        # Move the piece
+        #generate notations for moves
+        notation = f"{self.piece_position}_{to} "
     
+        # Move the piece
         self.forced_move(to)
 
+        return notation
+
+        
 

@@ -124,13 +124,17 @@ class Knight(Piece):
                 if rd.piece is None or rd.piece.piece_color == "white" and type(rd.piece) != King:
                     valid_moves_knight.append(right_down)
         
+         # Select same color king 
         for pos in pos_tuple:
             position = self.board.position_dict[pos]
             if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
                 my_king = position.piece
                 break
-
+    
+        # If king is in check, allow only those moves which prevent the check
         if my_king.is_in_check():
+            # Play every valid move and see if king is still in check.
+            # If king remains in check, then that valid move is removed
             new_valid_moves_knight = []
             initial_position = self.piece_position
             for final_position in valid_moves_knight:
@@ -153,6 +157,10 @@ class Knight(Piece):
         x = ord(self.piece_position[0])
         y = int(self.piece_position[1])
     
+        # Includes every possible move of the piece 
+         # If it encounters a piece loop terminates , unless ->
+            # If it encounters a opposite color king , then it continues to get invalid moves for opposite king
+
         if self.piece_color == "white":
             up_left = f"{chr(x-1)}{y+2}"
             up_right = f"{chr(x+1)}{y+2}"

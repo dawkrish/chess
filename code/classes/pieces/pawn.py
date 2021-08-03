@@ -47,6 +47,7 @@ class Pawn(Piece):
                 if rdp.piece is not None and rdp.piece.piece_color == "black" and type(rdp.piece) != King:
                     valid_moves_pawn.append(right_diagonal_position)
             
+            # Allows two step front move to the pawn for its 1st move 
             if y == 2:
                 fp = self.board.position_dict[front_position]
                 if fp.piece is None:
@@ -74,13 +75,15 @@ class Pawn(Piece):
                 if rdp.piece is not None and rdp.piece.piece_color == "white" and type(rdp.piece) != King:
                     valid_moves_pawn.append(right_diagonal_position)
 
+            # Allows two step front move to the pawn for its 1st move 
             if y == 7:
                 fp = self.board.position_dict[front_position]
                 if fp.piece is None:
                     fmp = self.board.position_dict[f"{chr(x)}{y - 2}"]
                     if fmp.piece is None:
                         valid_moves_pawn.append(f"{chr(x)}{y - 2}")
-        
+
+        # Select same color king 
         for pos in pos_tuple:
             position = self.board.position_dict[pos]
             if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
@@ -113,6 +116,10 @@ class Pawn(Piece):
         x = ord(self.piece_position[0])
         y = int(self.piece_position[1])
 
+        # Includes every possible move of the piece 
+         # If it encounters a piece loop terminates , unless ->
+            # If it encounters a opposite color king , then it continues to get invalid moves for opposite king
+            
         if self.piece_color == "white":
             left_diagonal_position = f"{chr(x-1)}{y+1}"
             right_diagonal_position = f"{chr(x+1)}{y+1}"

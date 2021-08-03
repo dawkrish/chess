@@ -160,7 +160,7 @@ class Rook(Piece):
                     valid_moves_rook.append(new_pos) 
                 break
             
-
+        # Select same color king 
         for pos in pos_tuple:
             position = self.board.position_dict[pos]
             if position.piece is not None and type(position.piece) == King and position.piece.piece_color == self.piece_color:
@@ -193,11 +193,14 @@ class Rook(Piece):
         x = ord(self.piece_position[0])
         y = int(self.piece_position[1])
 
+         # Includes every possible move of the piece 
+         # If it encounters a piece loop terminates , unless ->
+            # If it encounters a opposite color king , then it continues to get invalid moves for opposite king
+
         if self.piece_color == "white":
             # up  loop
             new_x = x
             new_y = y
-            # Includes every move and breaks the loop when a piece is encountered
             while True:
                 new_x = new_x  
                 new_y = new_y + 1

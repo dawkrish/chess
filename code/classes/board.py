@@ -1,4 +1,4 @@
-from .vars import pos_tuple, position_color_relation
+from .vars import pos_tuple
 from .position import Position
 from .pieces.pawn import Pawn
 from .pieces.king import King
@@ -71,9 +71,9 @@ class Board:
             self.position_dict[pos].piece = piece
         
         # Creating Kings    
-        '''for pos in Board.white_king_positions:
+        for pos in Board.white_king_positions:
             piece = King(self,"white", pos)
-            self.position_dict[pos].piece = piece'''
+            self.position_dict[pos].piece = piece
         for pos in Board.black_king_positions:
             piece = King(self,"black", pos)
             self.position_dict[pos].piece = piece
@@ -85,8 +85,13 @@ class Board:
         for pos in Board.black_knight_positions:
             piece = Knight(self,"black", pos)
             self.position_dict[pos].piece = piece
+            
 
     def print_board(self):
+        '''
+        Prints the chess board on terminal
+        '''
+
         print("   -" + ("-----" * 8))
         print("   |", "Chess Board".center(39), "|", sep="")
         for i in range(8, 0, -1):
@@ -108,4 +113,5 @@ class Board:
 
 b = Board()
 b.print_board()
+
 

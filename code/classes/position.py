@@ -14,5 +14,4 @@ class Position:
         self.position_color = position_color_relation[code] # Color of the position
         self.piece = None # Piece that is kept at the position
     
-    def __str__(self):
-        return self.position_code +" " + self.position_color
+   
