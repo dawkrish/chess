@@ -17,3 +17,4 @@ def update_moves(game_ID,new_moves):
     cursor = connection.cursor()
     cursor.execute(command)
     connection.commit()
+

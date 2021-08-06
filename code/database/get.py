@@ -9,7 +9,8 @@ def get(table, conditions, limit = 1):
     connection = connect()
     cursor = connection.cursor()
 
-    cursor.execute(f"SELECT * FROM {table} WHERE {conditions} LIMIT {limit}")
+    command = f"SELECT * FROM {table} WHERE {conditions} LIMIT {limit}"
+    cursor.execute(command)
     result = cursor.fetchall()
 
     return result
