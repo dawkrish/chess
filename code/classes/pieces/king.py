@@ -1,5 +1,3 @@
-
-
 from ..vars import pos_tuple
 from ..piece import Piece
 

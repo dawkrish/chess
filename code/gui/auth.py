@@ -1,80 +1,140 @@
 from .config import *
 from tkinter import *
+from ..database.get import get
+from ..database.create import create_user
 
-#Creating window
-window = Tk() #creates window
-window.geometry(f"{AUTH_WIDTH}x{AUTH_HEIGHT}") # window dimensions
-window.title(f"{TITLE}")            # window title
-window.config(background = "black") # window color
+main_window=Tk()
+main_window.geometry(f"{AUTH_WIDTH}x{AUTH_HEIGHT}") # window dimensions
+main_window.title(f"{TITLE}")            # window title
+main_window.config(background = "White")
 
-
-#photo = PhotoImage(file = "baruto.png")
-
-#Label
-'''label = Label(
-    window,
+heading = Label(main_window,
     text = "Welcome to Chess",
-    font = ("monospace",28,"bold"), # font = (name,size,style)
-    fg = "green", #foreground color use hex values 
-    bg = "white", #background color use hex values
-    relief = RAISED, #Border style
-    bd = 10   ,       # Thickness
-    padx = 20 ,       #Use to pad x-coordinate
-    pady = 20 ,        #Use to pad y-coordinate
-    #image = photo ,     #use to create image in label
-    compound= "bottom" #places image relative to text'''
+    font = ("Alef", 28, "bold"),
+    fg = "Green",
+    bg = "White")    
+heading.pack()
 
 
-#label.pack()
-#label.place(<x coordinate><y coordinate>)
+def main_signin():
+    window = Tk()
+    window.geometry(f"{AUTH_WIDTH}x{AUTH_HEIGHT}") # window dimensions
+    window.title(f"{TITLE}")            # window title
+    window.config(background = "White") # window color
 
-'''#Button
-def click():
-    print("Your chess game is under contstruction...")
-button = Button(
-    window,
-    text = "Wanna play chess? ",
-    command= click,
-    #we can add similar features like label 
-    activebackground="black",
-    activeforeground="pink"
-)
-button.pack()'''
+    form_heading = Label(window,
+        text="Sign In",
+        font=("Arial", 30),
+        fg="Black",
+        bg="White")
+    form_heading.pack()
+
+    username_label = Label(window,
+        text = "Enter your username",
+        font = ("Arial",20),
+        bg = "White")
+    username_label.pack()
+
+    username_entry = Entry(window,
+        font = (("arial", 20)))
+    username_entry.pack()
+
+    password_label = Label(window,
+        text = "Enter your password!",
+        font = ("Arial",20),
+        bg = "White")
+    password_label.pack()
+
+    password_entry = Entry(window,
+        font = ("arial",20),
+        show = "*")
+    password_entry.pack()
+
+    def signin_fn():
+        username = username_entry.get()
+        password = password_entry.get()
+        res = get("users", f"username = '{username}'")
+        if len(res) != 1:
+            raise ValueError("Invalid User")
+        user_details = res[0]
+        if user_details[1] != password:
+            raise ValueError("Invalid Password")
+        print("Done")
+        window.destroy()
+
+    signin_button = Button(window,
+        text = "Submit",
+        command = signin_fn)
+
+    signin_button.pack()
+
+    window.mainloop()
+
+def main_signup():
+    window = Tk()
+    window.geometry(f"{AUTH_WIDTH}x{AUTH_HEIGHT}") # window dimensions
+    window.title(f"{TITLE}")            # window title
+    window.config(background = "White") # window color
+
+    form_heading = Label(window,
+        text="Sign Up",
+        font=("Arial", 30),
+        fg="Black",
+        bg="White")
+    form_heading.pack()
+
+    username_label = Label(window,
+        text = "Enter your username",
+        font = ("Arial",20),
+        bg = "White")
+    username_label.pack()
+
+    username_entry = Entry(window,
+        font = (("arial", 20)))
+    username_entry.pack()
+
+    password_label = Label(window,
+        text = "Enter your password!",
+        font = ("Arial",20),
+        bg = "White")
+    password_label.pack()
+
+    password_entry = Entry(window,
+        font = ("arial",20),
+        show = "*")
+    password_entry.pack()
+
+    def signup_fn():
+        username = username_entry.get()
+        res = get("users", f"username = '{username}'")
+        if len(res) != 0:
+            raise ValueError("User already exists")
+        password = password_entry.get()
+        if len(password) < 8:
+            raise ValueError("Password is too short (should be >= 8)!")
+        create_user(username, password)
+        print("Done")
+        window.destroy()
+
+    signup_button = Button(window,
+        text = "Submit",
+        command = signup_fn)
+
+    signup_button.pack()
+
+    window.mainloop()
 
 
-'''#Creating entry box
-def enter():
-    username = entry.get() #gets entered text from the entry
-    print("Fuckoff "+username)
+sign_in_button = Button(main_window,
+    text = "Sign In",
+    font = ("Arial",30),
+    command = main_signin)
+sign_in_button.pack()
 
-entry = Entry(
-    window,
-    font = ("monospace",25,"italic"),
-    show = "*"
-)
-entry.pack(side=LEFT) # positioning
+sign_up_button = Button(main_window,
+    text = "Sign Up",
+    font = ("Arial",30),
+    command = main_signup)
+sign_up_button.pack()
 
-button = Button(
-    window,
-    text = "enter",
-    command = enter
-)
-button.pack(side="right")
-
-def delete():
-    entry.delete(0,END)
-delete_button = Button(
-    window,
-    text = "Delete",
-    command=delete
-)
-delete_button.pack(side="right")'''
-
-#sample project code
-
-
-
-
-
-window.mainloop()
-
+main_window.mainloop()
