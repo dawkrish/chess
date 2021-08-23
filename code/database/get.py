@@ -12,6 +12,6 @@ def get(table, conditions, limit = 1):
     command = f"SELECT * FROM {table} WHERE {conditions} LIMIT {limit}"
     cursor.execute(command)
     result = cursor.fetchall()
+    connection.commit()
 
     return result
-

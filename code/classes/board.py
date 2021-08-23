@@ -85,33 +85,100 @@ class Board:
         for pos in Board.black_knight_positions:
             piece = Knight(self,"black", pos)
             self.position_dict[pos].piece = piece
-            
+    
+    def is_game_over(self, color):
+        for pos in pos_tuple:
+            if self.position_dict[pos].piece == None:
+                continue
 
-    def print_board(self):
-        '''
-        Prints the chess board on terminal
-        '''
+            piece_at_pos = self.position_dict[pos].piece
 
-        print("   -" + ("-----" * 8))
-        print("   |", "Chess Board".center(39), "|", sep="")
-        for i in range(8, 0, -1):
-            print("   -" + ("-----" * 8))
-            print(f" {i} ", end="")
-            for j in range(97, 105):
-                pos = self.position_dict[f"{chr(j)}{i}"]
-                if pos.piece is None:
-                    res = "  "
+            if type(piece_at_pos) == King:
+                if piece_at_pos.piece_color == color:
+                    my_king = piece_at_pos
+                    if my_king.is_in_mate():
+                        return True, "lost"
                 else:
-                    res = str(pos.piece)
-                print("| " + res, end = " ")
-            print("|")
-        print("   -" + ("-----" * 8))
-        print(end="   ")
-        for i in range(97, 105):
-            print(f"{chr(i)}".center(5), end="")
-        print()
+                    opp_king = piece_at_pos
+                    if opp_king.is_in_mate():
+                        return True, "won"
+        
+        stalemate = True
+        for color in ["white", "black"]:
+            for pos in pos_tuple:
+                if self.position_dict[pos].piece == None:
+                    continue
 
-b = Board()
-b.print_board()
+                piece_at_pos = self.position_dict[pos].piece
 
+                if piece_at_pos.piece_color != color:
+                    continue
 
+                if piece_at_pos.get_moves() != []:
+                    stalemate = False
+                    break
+            
+            if not stalemate:
+                return False, None
+        
+        if stalemate:
+            return True, "stalemate"
+        
+        return False, None
+
+    def play_move(self, move_notation):
+        move_list = move_notation.split("_")
+        from_pos = move_list[0]
+        to_pos = move_list[1]
+        
+        if from_pos not in pos_tuple or to_pos not in pos_tuple:
+            raise ValueError("Invalid move")
+        
+        if self.position_dict[from_pos].piece == None:
+            raise ValueError("Invalid move")
+        
+        self.position_dict[from_pos].piece.move(to_pos)
+
+    def print_board(self, color):
+        '''
+        Prints the chess board for the given color in the terminal
+        '''
+
+        if color == "white":
+            print("   -" + ("-----" * 8))
+            print("   |", "Chess Board".center(39), "|", sep="")
+            for i in range(8, 0, -1):
+                print("   -" + ("-----" * 8))
+                print(f" {i} ", end="")
+                for j in range(97, 105):
+                    pos = self.position_dict[f"{chr(j)}{i}"]
+                    if pos.piece is None:
+                        res = "  "
+                    else:
+                        res = str(pos.piece)
+                    print("| " + res, end = " ")
+                print("|")
+            print("   -" + ("-----" * 8))
+            print(end="   ")
+            for i in range(97, 105):
+                print(f"{chr(i)}".center(5), end="")
+            print()
+        elif color == "black":
+            print("   -" + ("-----" * 8))
+            print("   |", "Chess Board".center(39), "|", sep="")
+            for i in range(1, 9):
+                print("   -" + ("-----" * 8))
+                print(f" {i} ", end="")
+                for j in range(97, 105):
+                    pos = self.position_dict[f"{chr(j)}{i}"]
+                    if pos.piece is None:
+                        res = "  "
+                    else:
+                        res = str(pos.piece)
+                    print("| " + res, end = " ")
+                print("|")
+            print("   -" + ("-----" * 8))
+            print(end="   ")
+            for i in range(97, 105):
+                print(f"{chr(i)}".center(5), end="")
+            print()
