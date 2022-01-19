@@ -39,7 +39,7 @@ class Knight(Piece):
                     valid_moves_knight.append(up_left)
 
             if up_right in pos_tuple:
-                ur = self.board.position_dict[up_left]
+                ur = self.board.position_dict[up_right]
                 if ur.piece is None or ur.piece.piece_color == "black" and type(ur.piece) != King :
                     valid_moves_knight.append(up_right)
 

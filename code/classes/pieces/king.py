@@ -109,7 +109,7 @@ class King(Piece):
             
             if up in pos_tuple and up not in invalid_moves:
                 u = self.board.position_dict[up]
-                if u.piece is None or r.piece.piece_color == "white":
+                if u.piece is None or u.piece.piece_color == "white":
                     valid_moves_king.append(up)
             
             if down in pos_tuple and down not in invalid_moves:
