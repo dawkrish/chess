@@ -75,13 +75,13 @@ def playing_loop(game_data, game_board, my_color, mode):
     return tuple(new_game_data)
 
 def waiting_loop(game_data, game_board, my_color, moves):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    game_board.print_board(my_color)
+    if my_color == "white":
+        print(f"\nWaiting for {game_data[3]}'s move...")
+    else:
+        print(f"\nWaiting for {game_data[2]}'s move...")
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        game_board.print_board(my_color)
-        if my_color == "white":
-            print(f"\nWaiting for {game_data[3]}'s move...")
-        else:
-            print(f"\nWaiting for {game_data[2]}'s move...")
         res = get("games", f"id = {game_data[0]}")
         if len(res) != 1:
             raise ValueError("Ivalid game")
@@ -187,13 +187,13 @@ Enter 1 to join a game
         game_board = Board()
         my_color = "white"
         moves = ''
+        
+        os.system('cls' if os.name == 'nt' else 'clear')
 
+        game_board.print_board(my_color)
+        print("\nWaiting for someone to join the game...")
+        
         while True:
-            
-            os.system('cls' if os.name == 'nt' else 'clear')
-
-            game_board.print_board(my_color)
-            print("\nWaiting for someone to join the game...")
             res = get("games", f"id = {game_id}")
             game_data = res[0]
             if game_data[1] == 'running':
