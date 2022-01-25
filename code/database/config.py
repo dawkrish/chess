@@ -1,6 +1,6 @@
 #VARIABLES FOR DATABASE CONNECTION
 
-DATABASE = "sql6432251"
-HOST = "sql6.freesqldatabase.com"
-USER = "sql6432251"
-PASSWORD = "YLczBzlltq"
+DATABASE = "chess_db"
+HOST = "localhost"
+USER = ""
+PASSWORD = ""
